@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
-        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/plyr/2.0.18/plyr.css">
         <style>
-            video {
-              max-width: 100%;
-              border: 5px solid yellow;
-              border-radius: 9px;
-            }
-            body {
-              background: black;
-            }
-            h1 {
-              color: yellow;
+            .container {
+                max-width: 840px;
+                width: 100%;
+                margin: 0 auto;
             }
         </style>
     </head>
 
     <body>
-        <h1 id="header">RecordRTC Upload to PHP</h1>
-        <video id="your-video-id" controls="" autoplay=""></video>
-
+        <div class="container">
+            <h1 id="header">RecordRTC Upload to PHP</h1>
+            <video id="your-video-id" controls="" autoplay=""></video>
+        </div>
+        
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/plyr/2.0.18/plyr.js'></script>
+        <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
+        <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script type="text/javascript">
+            // init Plyr
+            plyr.setup(document.getElementById('your-video-id'));
             // capture camera and/or microphone
             navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(function(camera) {
                 // preview camera during recording
@@ -56,31 +56,32 @@
                         formData.append('video-blob', fileObject);
                         // file name
                         formData.append('video-filename', fileObject.name);
+                        console.log(formData);
                         document.getElementById('header').innerHTML = 'Uploading to PHP using jQuery.... file size: (' +  bytesToSize(fileObject.size) + ')';
                         // upload using jQuery
-                        // $.ajax({
-                        //     url: 'https://webrtcweb.com/RecordRTC/', // replace with your own server URL
-                        //     data: formData,
-                        //     cache: false,
-                        //     contentType: false,
-                        //     processData: false,
-                        //     type: 'POST',
-                        //     success: function(response) {
-                        //         if (response === 'success') {
-                        //             alert('successfully uploaded recorded blob');
-                        //             // file path on server
-                        //             var fileDownloadURL = 'https://webrtcweb.com/RecordRTC/uploads/' + fileObject.name;
-                        //             // preview the uploaded file URL
-                        //             document.getElementById('header').innerHTML = '<a href="' + fileDownloadURL + '" target="_blank">' + fileDownloadURL + '</a>';
-                        //             // preview uploaded file in a VIDEO element
-                        //             // document.getElementById('your-video-id').src = fileDownloadURL;
-                        //             // open uploaded file in a new tab
-                        //             window.open(fileDownloadURL);
-                        //         } else {
-                        //             alert(response); // error/failure
-                        //         }
-                        //     }
-                        // });
+                        $.ajax({
+                            url: 'https://webrtcweb.com/RecordRTC/', // replace with your own server URL
+                            data: formData,
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            type: 'POST',
+                            success: function(response) {
+                                if (response === 'success') {
+                                    alert('successfully uploaded recorded blob');
+                                    // file path on server
+                                    var fileDownloadURL = 'https://webrtcweb.com/RecordRTC/uploads/' + fileObject.name;
+                                    // preview the uploaded file URL
+                                    document.getElementById('header').innerHTML = '<a href="' + fileDownloadURL + '" target="_blank">' + fileDownloadURL + '</a>';
+                                    // preview uploaded file in a VIDEO element
+                                    document.getElementById('your-video-id').src = fileDownloadURL;
+                                    // open uploaded file in a new tab
+                                    // window.open(fileDownloadURL);
+                                } else {
+                                    alert(response); // error/failure
+                                }
+                            }
+                        });
                         // release camera
                         document.getElementById('your-video-id').srcObject = document.getElementById('your-video-id').src = null;
                         camera.getTracks().forEach(function(track) {

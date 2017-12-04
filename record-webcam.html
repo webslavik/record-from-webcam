@@ -5,18 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Testing RecordRTC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/plyr/2.0.18/plyr.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
   <div class="wrap">
     <h1 id="header">RecordRTC with upload</h1>
-    <video id="video-player" controls></video>
-    <div class='error-msg'></div>
+    <video id="video-player" controls autoplay></video>
+    <button id='start'>start</button>
+    <button id='stop'>stop</button>
+    <button id='review'>review</button>
+    <div id='msg'></div>
   </div>
 
-    <!-- <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
-  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/plyr/2.0.18/plyr.js'></script>
+  <script src="https://cdn.webrtc-experiment.com/RecordRTC.js"></script>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src='js/main.js'></script>
 </body>
