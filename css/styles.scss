@@ -1,0 +1,13 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+.wrap {
+  max-width: 800px;
+  width: 100%;
+}
+video {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid grey;
+}
